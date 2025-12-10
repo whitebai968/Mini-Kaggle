@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datasets Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo" title="Group 06">Dataset House</div>
+        <nav>
+            <a href="{{ url_for('dataset.dashboard') }}">datasets</a>
+            <a href="{{ url_for('auth.logout') }}">logout</a>
+        </nav>
+    </header>
+
+<div class="page-title-actions">
+        <h2>Datasets</h2>
+        <div class="actions">
+            <a href="{{ url_for('dataset.create') }}">create</a>
+            <a href="{{ url_for('query.sql_query') }}">query</a>
+        </div>
+    </div>
+
+    {% include 'messages.html' %}
+
+    <div class="dataset-list">
+        {% for dataset in datasets %}
+        <div class="dataset-item">
+            <h3 class="dataset-title">{{ dataset.name }}</h3>
+            <p>{{ dataset.description }}</p>
+
+            <div class="dataset-meta">
+                <span>Rows: {{ dataset.row_count }}</span>
+                <span>Columns: {{ dataset.column_count }}</span>
+                <span>Table: {{ dataset.table_name }}</span>
+            </div>
+
+            <div class="dataset-meta">
+                <span>Types: {{ dataset.column_types }}</span>
+            </div>
+            
+            <div class="dataset-subtext">
+                File: {{ dataset.original_filename }}
+            </div>
+
+            <div class="actions item-actions">
+                <a href="{{ url_for('dataset.download', dataset_id=dataset.id) }}">download</a>
+
+                {% if session.get('_user_id')|int == dataset.owner_id %}
+                    <a href="{{ url_for('dataset.edit', dataset_id=dataset.id) }}">edit</a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <p>No datasets found. Create one!</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

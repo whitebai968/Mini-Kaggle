@@ -1,0 +1,255 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 25px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+/* the top navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #aaa;
+    font-style: italic;
+    text-decoration: none;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: underline;
+    color: #0066cc;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* button to other pages */
+h2 {
+    font-weight: normal;
+    font-size: 28px;
+    margin-top: 0;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.page-title-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+.page-title-actions h2 {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.page-title-actions .actions {
+    margin-top: 0;
+}
+
+/* appearance of each page */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #444;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+textarea {
+    width: 98%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    background-color: #f9f9f9;
+}
+
+textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+/* Query radio button*/
+.form-group-radio label {
+    display: inline-block;
+    margin-right: 15px;
+}
+.form-group-radio input[type="radio"] {
+    margin-right: 5px;
+}
+
+.custom-file-upload {
+    display: flex;
+    width: 100%;
+}
+
+.file-visible-text {
+    flex-grow: 1;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.file-hidden-input {
+    display: none;
+}
+
+.file-upload-label {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #0066cc;
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: transparent;
+    white-space: nowrap;
+}
+.file-upload-label:hover {
+    text-decoration: underline;
+}
+
+/*.file-upload-label {*/
+/*    display: inline-block;*/
+/*    padding: 10px 15px;*/
+/*    font-size: 16px;*/
+/*    font-weight: normal;*/
+/*    color: #333;             !* 深色文字 *!*/
+/*    background-color: #e0e0e0; !* 灰色背景 *!*/
+/*    border: 1px solid #ccc;    !* 边框 *!*/
+/*    border-left: none;         !* 去掉左边框，因为它紧挨着左边的输入框 *!*/
+/*    border-top-right-radius: 4px;*/
+/*    border-bottom-right-radius: 4px;*/
+/*    cursor: pointer;*/
+/*    white-space: nowrap;*/
+/*}*/
+
+/*.file-upload-label:hover {*/
+/*    background-color: #d0d0d0;*/
+/*    text-decoration: none;*/
+/*}*/
+
+
+
+/* Login, Save, Cancel... */
+.actions {
+    margin-top: 25px;
+}
+
+.actions a {
+    margin-right: 20px;
+    text-decoration: underline;
+    color: #0066cc;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.item-actions a {
+    font-size: 14px;
+    margin-right: 15px;
+}
+
+/* datasets.html */
+.dataset-list {
+    margin-top: 20px;
+}
+
+.dataset-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.dataset-item:last-child {
+    border-bottom: none;
+}
+
+h3.dataset-title {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+/* Rows, Columns... */
+.dataset-meta {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+}
+.dataset-meta span {
+    margin-right: 15px;
+}
+
+.dataset-subtext {
+    font-size: 13px;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+/* message box */
+.message-container {
+    margin-bottom: 20px;
+}
+.error-message {
+    border: 1px solid #cc0000;
+    color: #cc0000;
+    padding: 15px;
+    text-align: center;
+    background-color: #fbeaea;
+    border-radius: 4px;
+}
+.notification-message {
+    border: 1px solid #006621;
+    color: #006621;
+    padding: 15px;
+    text-align: center;
+    background-color: #f0f9f2;
+    border-radius: 4px;
+}
+
+button.action-btn,
+button[type="submit"] {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #0066cc;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-right: 20px; /* 保持间距 */
+}
+
+button.action-btn:hover {
+    text-decoration: none;
+}

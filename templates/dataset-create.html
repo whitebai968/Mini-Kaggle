@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dataset Creation Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo" title="Group 06">Dataset House</div>
+        <nav>
+            <a href="{{ url_for('dataset.dashboard') }}">datasets</a>
+            <a href="{{ url_for('auth.logout') }}">logout</a>
+        </nav>
+    </header>
+
+    <h2>Dataset Creation</h2>
+    <!-- 必须使用的enctype，否则flask无法将file和文字分开取出-->
+    <form method="POST" action="{{ url_for('dataset.create') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Name</label>
+            <label>
+                <input type="text" name="name" required>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <label>
+                <textarea name="description"></textarea>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>Table</label>
+            <label>
+                <input type="text" name="table_name" placeholder="e.g. ds_cars" required>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>File</label>
+
+            <div class="custom-file-upload">
+                <input type="text" id="filename-display" class="file-visible-text" placeholder="No file chosen" readonly aria-label="Selected file name">
+
+                <input type="file" name="file" id="real-file" class="file-hidden-input" required onchange="showFileName(this)">
+
+                <label for="real-file" class="file-upload-label">choose file</label>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="action-btn">save</button>
+            <a href="{{ url_for('dataset.dashboard') }}">cancel</a>
+        </div>
+    </form>
+
+    {% include 'messages.html' %}
+
+    <script>
+        function showFileName(input) {
+            var displayBox = document.getElementById('filename-display');
+            if (input.files && input.files.length > 0) {
+                displayBox.value = input.files[0].name;
+            } else {
+                displayBox.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
