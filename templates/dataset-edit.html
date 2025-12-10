@@ -7,7 +7,10 @@
 </head>
 <body>
     <header>
-        <div class="logo" title="Group 06">Dataset House</div>
+        <div class="logo" title="Group 06">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+            Dataset House
+        </div>
         <nav>
             <a href="{{ url_for('dataset.dashboard') }}">datasets</a>
             <a href="{{ url_for('auth.logout') }}">logout</a>

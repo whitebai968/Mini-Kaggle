@@ -2,12 +2,15 @@ from flask import Flask, render_template
 from models import db, User
 from flask_login import LoginManager
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_app():
     app = Flask(__name__)
     # 用于给 Session 签名，不设这个无法登录。作业里随便写，生产环境要保密。作用是保护cookie不被篡改和伪造
-    app.config['SECRET_KEY'] = 'dev-key-for-homework'
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default-dev-key')
     # 告诉 SQLAlchemy 数据库文件存在哪
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['UPLOAD_FOLDER'] = 'uploads'  # 存放 CSV等上传文件等文件夹
@@ -47,4 +50,4 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True, port=5001)
+    app.run(host='0.0.0.0', port=5001, debug=True)

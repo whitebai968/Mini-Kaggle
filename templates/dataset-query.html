@@ -7,7 +7,10 @@
 </head>
 <body>
     <header>
-        <div class="logo" title="Group 06">Dataset House</div>
+        <div class="logo" title="Group 06">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+            Dataset House
+        </div>
         <nav>
             <a href="{{ url_for('dataset.dashboard') }}">datasets</a>
             <a href="{{ url_for('auth.logout') }}">logout</a>
@@ -17,8 +20,17 @@
     <h2>Dataset Query</h2>
 
     <form method="POST" action="{{ url_for('query.sql_query') }}">
+        <div class="form-group-radio">
+            <label style="font-weight: bold; margin-right: 10px;">Mode:</label>
+            <input type="radio" name="mode" value="ai" id="mode-ai" checked>
+            <label for="mode-ai" style="color: #0066cc;">AI</label>
+
+            <input type="radio" name="mode" value="sql" id="mode-sql">
+            <label for="mode-sql">SQL</label>
+        </div>
+
         <div class="form-group">
-            <label>Select Statement</label>
+            <label>Please Input</label>
             <label>
                 <textarea name="sql_query" required>{{ request.form.get('sql_query', '') }}</textarea>
             </label>
@@ -36,6 +48,19 @@
     </form>
 
     {% include 'messages.html' %}
+
+    {% if error %}
+    <div style="background-color: #ffe6e6; color: #cc0000; padding: 15px; margin-top: 20px; border: 1px solid #cc0000; border-radius: 4px;">
+        <strong>Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+
+    {% if generated_sql %}
+    <div style="background-color: #e6f3ff; border-left: 5px solid #0066cc; padding: 15px; margin-top: 20px;">
+        <h4 style="margin-top: 0; color: #0066cc;">🤖 AI Generated SQL:</h4>
+        <pre style="background: transparent; border: none; padding: 0; margin: 0; font-family: monospace; font-weight: bold;">{{ generated_sql }}</pre>
+    </div>
+    {% endif %}
 
     {% if query_result %}
     <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
