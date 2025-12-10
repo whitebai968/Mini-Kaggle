@@ -1,103 +1,103 @@
 # Dataset House 开发全流程记录 (Development Process)
 
-本项目是一个基于 Flask 的全栈 Web 应用，旨在提供 CSV 等格式的数据集的管理、上传、分析和 SQL 查询功能。以下是该项目的从零构建流程及核心代码实现。
-
+This project is a full-stack Web application built with Flask, designed to provide dataset management, uploading, analysis, and SQL querying functionalities for CSV and similar formats. Below is the full development process and core implementation from scratch.
 ---
 
 ```text
 Mini-Kaggle/
-├── app.py                  # 应用入口 (Flask App Initialization)
-├── models.py               # 数据库模型 (User, DatasetMetadata)
-├── requirements.txt        # Python 依赖列表
-├── instance/               # 实例文件夹 (不上传到 Git)
-│   └── database.db         # SQLite 数据库文件
-├── static/                 # 静态资源
+├── app.py                  # Application entry point (Flask initialization)
+├── models.py               # Database models (User, DatasetMetadata)
+├── requirements.txt        # Python dependency list
+├── instance/               # Instance folder (not uploaded to Git)
+│   └── database.db         # SQLite database file
+├── static/                 # Static assets
 │   ├── css/
-│   │   └── style.css       # 全局样式表
+│   │   └── style.css       # Global stylesheet
 │   └── images/
-│       └── logo.png        # 项目 Logo
-├── templates/              # HTML 模板 (Jinja2)
-│   ├── base.html           # 基础布局 (可选)
-│   ├── Login.html          # 登录页
-│   ├── register.html       # 注册页
-│   ├── datasets.html       # 数据集列表 (Dashboard)
-│   ├── dataset-create.html # 上传/创建页
-│   ├── dataset-edit.html   # 编辑/删除页
-│   ├── dataset-query.html  # SQL 查询页
-│   └── messages.html       # 闪现消息组件
-├── uploads/                # 用户上传的文件存储目录
-└── routes/                 # 业务逻辑 (Blueprints)
-    ├── auth.py             # 认证模块 (登录/注册)
-    ├── dataset.py          # 数据集核心逻辑 (CRUD)
-    └── query.py            # SQL 查询逻辑
+│       └── logo.png        # Project logo
+├── templates/              # HTML templates (Jinja2)
+│   ├── base.html           # Base layout (optional)
+│   ├── Login.html          # Login page
+│   ├── register.html       # Registration page
+│   ├── datasets.html       # Dataset dashboard/list
+│   ├── dataset-create.html # Dataset upload/create page
+│   ├── dataset-edit.html   # Dataset edit/delete page
+│   ├── dataset-query.html  # SQL query page
+│   └── messages.html       # Flash message component
+├── uploads/                # Directory for user-uploaded files
+└── routes/                 # Business logic (Blueprints)
+    ├── auth.py             # Authentication module (login/register)
+    ├── dataset.py          # Dataset core logic (CRUD)
+    └── query.py            # SQL query logic
+
 ```
 
 ---
 
-## 第一阶段：地基与环境 (Infrastructure & Data)
+## Phase 1: Infrastructure & Environment (Infrastructure & Data)
 
 ### 1. `requirements.txt`
-- **动作**：首先定义项目需要哪些工具（Flask, Pandas, SQLAlchemy）。
-- **理由**：没有这些包，一行代码都运行不起来。
+- **Action**: First define which tools the project needs (Flask, Pandas, SQLAlchemy).
+- **Reason**: Without these packages, not a single line of code can run.
 
 ### 2. `models.py`
-- **动作**：设计数据库结构 (`User` 和 `DatasetMetadata`)。
-- **理由**：这是整个项目的“灵魂”。如果你不知道用户长什么样、数据集包含哪些字段（行数、表名、路径），你就无法编写注册逻辑或上传逻辑。
+- **Action**: Design the database structure (`User` and `DatasetMetadata`).
+- **Reason**: This is the “core” of the entire project. If you don't know what the user model looks like or what fields a dataset contains (row count, table name, file path), you cannot write registration or upload logic.
 
-### 3. `app.py` 
-- **动作**：初始化 Flask 应用，配置数据库连接 (`sqlite:///database.db`)，设置 `UPLOAD_FOLDER`。
-- **理由**：这是“启动器”。写完这个，就可以运行 `python app.py` 来生成 `instance/database.db` 数据库文件，测试环境是否通畅。
+### 3. `app.py`
+- **Action**: Initialize the Flask application, configure the database connection (`sqlite:///database.db`), and set `UPLOAD_FOLDER`.
+- **Reason**: This is the “launcher.” After writing this file, you can run `python app.py` to generate the `instance/database.db` database file and verify the environment works correctly.
 
----
 
-## 第二阶段：用户认证模块 (Authentication Module)
+
+## Phase 2: Authentication Module (Authentication Module)
 
 ### 4. `routes/auth.py`
-- **动作**：编写 `/login` 和 `/register` 的后端逻辑。
-- **理由**：任何功能（上传、查询）都需要 `current_user`。没有用户系统，后面的功能无法测试。
+- **Action**: Implement the backend logic for `/login` and `/register`.
+- **Reason**: All features (upload, query) require `current_user`. Without a user system, later features cannot be tested.
 
-### 5. `templates/register.html` 和 `templates/Login.html`
-- **动作**：编写表单前端。
-- **理由**：配合 `auth.py` 进行联调。
-    > *测试点：注册一个用户，查看数据库是否真的生成了记录。*
+### 5. `templates/register.html` and `templates/Login.html`
+- **Action**: Build the frontend form pages.
+- **Reason**: Used together with `auth.py` for integration testing.
+    > *Test point: Register a user and check whether a record is actually created in the database.*
 
----
 
-## 第三阶段：核心业务 - 数据集管理 (Core Feature - Dataset)
 
-### 6. `routes/dataset.py` (上传与列表部分)
-- **动作**：编写 `create` (上传) 和 `dashboard` (列表) 的逻辑。
-- **理由**：这是最难的部分，也是项目的核心价值。需要处理流程：文件上传 -> Pandas 读取 -> 存入 SQLite -> 写入 `DatasetMetadata` 表。
+## Phase 3: Core Feature - Dataset Management (Core Feature - Dataset)
 
-### 7. `templates/dataset-create.html` 和 `templates/datasets.html`
-- **动作**：编写上传页面和展示列表。
-- **理由**：联调上传功能。
-    > *测试点：上传一个 CSV，看列表页能不能显示出 Rows, Columns 等推断信息。*
+### 6. `routes/dataset.py` (Upload and List)
+- **Action**: Implement the logic for `create` (upload) and `dashboard` (list).
+- **Reason**: This is the most challenging part and the core value of the project. It must handle the workflow: file upload -> read with Pandas -> store into SQLite -> write into the `DatasetMetadata` table.
 
-### 8. `routes/dataset.py` (编辑与下载部分) + `templates/dataset-edit.html`
-- **动作**：补充 `edit` (修改/删除) 和 `download` 路由。
-- **理由**：这是对核心功能的完善（CRUD 中的 Update 和 Delete）。
+### 7. `templates/dataset-create.html` and `templates/datasets.html`
+- **Action**: Build the upload page and the dataset list page.
+- **Reason**: Used to test and integrate the upload functionality.
+    > *Test point: Upload a CSV and check whether the list page displays inferred information such as Rows and Columns.*
 
----
+### 8. `routes/dataset.py` (Edit and Download) + `templates/dataset-edit.html`
+- **Action**: Add the `edit` (update/delete) and `download` routes.
+- **Reason**: This completes the core functionality (Update and Delete in CRUD).
 
-## 第四阶段：高级功能 - 查询控制台 (Advanced Feature - Query)
+
+
+
+## Phase 4: Advanced Feature - Query Console (Advanced Feature - Query)
 
 ### 9. `routes/query.py`
-- **动作**：编写接收 SQL -> Pandas 执行 -> 返回 JSON/CSV 的逻辑。
-- **理由**：这是一个独立的功能模块，依赖于“已有数据集表”存在，所以放在数据上传功能之后写。
+- **Action**: Implement the logic to receive SQL -> execute via Pandas -> return JSON/CSV.
+- **Reason**: This is an independent feature module, and it depends on dataset tables already existing, so it is implemented after the upload functionality.
 
 ### 10. `templates/dataset-query.html`
-- **动作**：编写 SQL 输入框和结果展示区域。
-- **理由**：测试输入 `SELECT * FROM ...` 是否能正确看到结果。
+- **Action**: Build the SQL input box and the result display area.
+- **Reason**: Used to test whether entering `SELECT * FROM ...` correctly displays the query results.
 
----
 
-## 第五阶段：UI 优化与收尾 (UI Polish & Cleanup)
+## Phase 5: UI Polish & Cleanup (UI Polish & Cleanup)
 
 ### 11. `templates/messages.html`
-- **动作**：提取所有 `flash` 消息到一个独立文件。
-- **理由**：代码复用。这时候回头把所有模板里的 `get_flashed_messages` 替换成这个 include。
+- **Action**: Extract all `flash` messages into a separate file.
+- **Reason**: For code reuse. At this stage, replace all `get_flashed_messages` in templates with this include.
 
 ### 12. `static/css/style.css`
-- **动作**：为之前的纯 HTML 页面添加样式。
-- **理由**：虽然在开发 HTML 时会写一些简单的 style，但最终的统一视觉风格（颜色、间距、布局）通常是最后调整的，以确保所有页面风格一致。
+- **Action**: Add styling to the previously plain HTML pages.
+- **Reason**: Although simple styles may have been written during HTML development, the final unified visual design (colors, spacing, layout) is typically adjusted at the end to ensure consistency across all pages.
