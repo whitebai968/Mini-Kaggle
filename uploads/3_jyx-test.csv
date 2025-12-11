@@ -1,0 +1,5 @@
+﻿CHANNEL_ID,CHANNEL_NAME,DESCRIPTION,PLATFORM
+1,Email,Email marketing,Email
+2,Push Notification,App or mobile notifications,App
+21,Social Media,"Instagram, Facebook, TikTok",Social
+22,SMS,Text message marketing,Phone

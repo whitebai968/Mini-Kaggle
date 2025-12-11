@@ -32,6 +32,37 @@ Mini-Kaggle/
 
 ```
 
+## Quick Start
+
+Follow these steps to set up and run the project locally.
+
+### 1. Install Dependencies
+Make sure you have Python installed. Run the following command to install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Change the config
+Change .env file
+```bash
+LLM_API_KEY=""
+LLM_BASE_URL=""
+LLM_MODEL_NAME=""
+
+
+SECRET_KEY="" # can be None
+```
+
+### 3. Run the Application
+
+```bash
+cd Your-Project-Folder
+python app.py
+
+```
+
+
 ---
 
 ## Phase 1: Infrastructure & Environment (Infrastructure & Data)
